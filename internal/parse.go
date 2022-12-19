@@ -29,7 +29,12 @@ func PrintHelp() {
 	for _, value := range flags {
 		if index == flagsLen-1 {
 			for _, flag := range value {
-				flg := fmt.Sprintf("%s|%s", flag.Long, flag.Short)
+				var flg string
+				if flag.Short != nil {
+					flg = fmt.Sprintf("%s|%s", flag.Long, *flag.Short)
+				} else {
+					flg = flag.Long
+				}
 				flgs = append(flgs, flg)
 				help = append(help, flag.Help)
 				len := len(flg)
@@ -58,7 +63,7 @@ func parseValue(name string, args []string) error {
 	if len(args) != 0 {
 		cmd := args[0]
 		for _, flg := range flags[name] {
-			if flg.Long == cmd || flg.Short == cmd {
+			if flg.Long == cmd || (flg.Short != nil && *flg.Short == cmd) {
 				parsedFlags++
 				return flg.parse(args)
 			}

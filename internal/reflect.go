@@ -9,7 +9,7 @@ type Args []string
 type Tag string
 type Never bool
 type Flag struct {
-	Short    string
+	Short    *string
 	Long     string
 	Help     string
 	Type     reflect.StructField
@@ -34,7 +34,7 @@ func (f Flag) set(cmd string, args Args) error {
 }
 func (f Flag) parse(args []string) error {
 	cmd := args[0]
-	if f.Long == cmd || f.Short == cmd {
+	if f.Long == cmd || (f.Short != nil && *f.Short == cmd) {
 		return f.set(cmd, args[1:])
 	}
 	return nil
@@ -94,7 +94,10 @@ func reflector(inst any) string {
 
 func toFlag(instance any, name string, index int, value reflect.Value, field reflect.StructField) *Flag {
 	flag := Flag{}
-	flag.Short = field.Tag.Get(string(TAG_SHORT))
+	short := field.Tag.Get(string(TAG_SHORT))
+	if len(short) > 0 {
+		flag.Short = &short
+	}
 	flag.Long = field.Tag.Get(string(TAG_LONG))
 	flag.Help = field.Tag.Get(string(TAG_HELP))
 	flag.Type = field
