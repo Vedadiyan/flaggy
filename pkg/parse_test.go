@@ -22,8 +22,8 @@ func (subOption SubOption) Run() error {
 }
 
 type Options struct {
-	Help      bool      `long:"help" short:"h" help:"shows help"`
-	SubOption SubOption `long:"test" short:"t" help:"shows help"`
+	Help      bool       `long:"help" short:"h" help:"shows help"`
+	SubOption *SubOption `long:"test" short:"t" help:"shows help"`
 }
 
 func (options Options) Run() error {

@@ -83,7 +83,8 @@ func ignore(name string, args Args) error {
 		return parseValue(name, args[2:])
 	}
 	if runMethod, ok := runMethods[name]; ok {
-		return runMethod()
+		err := runMethod()
+		return err
 	}
 	return nil
 }

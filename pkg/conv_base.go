@@ -18,9 +18,9 @@ func (f Flag) setPtr(args Args) error {
 	case reflect.Struct:
 		{
 			inst := reflect.New(f.Type.Type.Elem()).Interface()
-			parse(inst, args)
+			err := parse(inst, args)
 			f.Value.Set(reflect.ValueOf(inst))
-			return nil
+			return err
 		}
 	case reflect.String:
 		{
@@ -125,8 +125,7 @@ func (f Flag) setPtr(args Args) error {
 			}
 		}
 	}
-	parseValue(f.Name, args[1:])
-	return nil
+	return parseValue(f.Name, args[1:])
 }
 
 func (f Flag) setValue(args Args) error {
@@ -134,9 +133,9 @@ func (f Flag) setValue(args Args) error {
 	case reflect.Struct:
 		{
 			inst := reflect.New(f.Type.Type).Interface()
-			parse(inst, args)
+			err := parse(inst, args)
 			f.Value.Set(reflect.ValueOf(inst).Elem())
-			return nil
+			return err
 		}
 	case reflect.String:
 		{
@@ -245,8 +244,8 @@ func (f Flag) setValue(args Args) error {
 			return f.setArray(args)
 		}
 	}
-	parseValue(f.Name, args[1:])
-	return nil
+	return parseValue(f.Name, args[1:])
+
 }
 
 func (f Flag) setArray(args Args) error {
@@ -342,8 +341,7 @@ func (f Flag) setArray(args Args) error {
 			}
 		}
 	}
-	parseValue(f.Name, args[1:])
-	return nil
+	return parseValue(f.Name, args[1:])
 }
 
 func validate(errorType ErrorType, args Args) error {
