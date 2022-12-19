@@ -19,8 +19,11 @@ func (f Flag) setPtr(args Args) error {
 		{
 			inst := reflect.New(f.Type.Type.Elem()).Interface()
 			err := parse(inst, args)
+			if err != nil {
+				return err
+			}
 			f.Value.Set(reflect.ValueOf(inst))
-			return err
+			return nil
 		}
 	case reflect.String:
 		{
@@ -134,8 +137,11 @@ func (f Flag) setValue(args Args) error {
 		{
 			inst := reflect.New(f.Type.Type).Interface()
 			err := parse(inst, args)
+			if err != nil {
+				return err
+			}
 			f.Value.Set(reflect.ValueOf(inst).Elem())
-			return err
+			return nil
 		}
 	case reflect.String:
 		{
