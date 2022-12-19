@@ -54,7 +54,7 @@ Flaggy has limited support for Go's data types. The following table lists out al
 - [x] string
 - [x] *string      
 - [x] bool   
-- [ ] *bool        
+- [x] *bool        
 - [x] struct 
 - [x] *struct      
 - [x] slice/array
