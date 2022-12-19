@@ -50,12 +50,15 @@ const (
 )
 
 var (
+	levels     int
 	flags      Flags
+	flagLevels map[string]int
 	runMethods map[string]func() error
 )
 
 func init() {
 	flags = make(Flags)
+	flagLevels = make(map[string]int)
 
 }
 
@@ -64,6 +67,8 @@ func reflector(inst any) string {
 	reflectedValue := reflect.ValueOf(inst)
 	name := reflectedType.Elem().Name()
 	flags[name] = make([]Flag, 0)
+	flagLevels[name] = levels
+	levels++
 	runMethods = make(map[string]func() error)
 	nOfF := reflectedType.Elem().NumField()
 	for fi := 0; fi < nOfF; fi++ {

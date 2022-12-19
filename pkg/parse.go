@@ -21,29 +21,31 @@ func Parsed() bool {
 
 // Prints the current level of help
 func PrintHelp() {
-	flagsLen := len(flags)
-	index := 0
 	flgs := make([]string, 0)
 	help := make([]string, 0)
 	longestFlg := 0
-	for _, value := range flags {
-		if index == flagsLen-1 {
-			for _, flag := range value {
-				var flg string
-				if flag.Short != nil {
-					flg = fmt.Sprintf("%s|%s", flag.Long, *flag.Short)
-				} else {
-					flg = flag.Long
-				}
-				flgs = append(flgs, flg)
-				help = append(help, flag.Help)
-				len := len(flg)
-				if len > longestFlg {
-					longestFlg = len
-				}
-			}
+	maxFlagLevel := 0
+	flagName := ""
+	for key, value := range flagLevels {
+		if value > maxFlagLevel {
+			maxFlagLevel = value
+			flagName = key
 		}
-		index++
+	}
+
+	for _, flag := range flags[flagName] {
+		var flg string
+		if flag.Short != nil {
+			flg = fmt.Sprintf("%s|%s", flag.Long, *flag.Short)
+		} else {
+			flg = flag.Long
+		}
+		flgs = append(flgs, flg)
+		help = append(help, flag.Help)
+		len := len(flg)
+		if len > longestFlg {
+			longestFlg = len
+		}
 	}
 	for i := 0; i < len(flgs); i++ {
 		fmt.Print(flgs[i])

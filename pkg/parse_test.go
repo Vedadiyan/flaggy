@@ -17,7 +17,7 @@ type SubOption struct {
 }
 
 func (subOption SubOption) Run() error {
-	fmt.Println("ok")
+	PrintHelp()
 	return nil
 }
 
