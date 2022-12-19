@@ -18,7 +18,7 @@ Parsing options (flags) is as easy as calling the `Parse` method. For example:
     options := Options {}
     err := flaggy.Parse(&options, os.Args[1:])
 
-You can also verify if any argument has been parsed successfullt using the `Parsed` method.     
+You can also verify if any argument has been parsed successfully using the `Parsed` method.     
 
 ### Supported Data Types 
 Flaggy has limited support for Go's data types. The following table lists out all data types that are currently supported by Flaggy: 
