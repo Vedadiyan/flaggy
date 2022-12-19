@@ -2,6 +2,7 @@ package flaggy
 
 import (
 	"fmt"
+	"math"
 )
 
 var (
@@ -24,7 +25,7 @@ func PrintHelp() {
 	flgs := make([]string, 0)
 	help := make([]string, 0)
 	longestFlg := 0
-	maxFlagLevel := 0
+	maxFlagLevel := math.MinInt
 	flagName := ""
 	for key, value := range flagLevels {
 		if value > maxFlagLevel {
